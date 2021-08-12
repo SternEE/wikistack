@@ -1,13 +1,26 @@
 const express = require('express');
 const app = express();
-const PORT = 1337;
+const PORT = 3000;
 const route = require('./routes/route');
 const morgan = require('morgan');
+const { db } = require('./models');
 
 
-app.listen(PORT, ()=>{
-  console.log(`connection to localholst ${PORT}`);
-});
+
+//Creates the connection to the database
+db.authenticate().then(() => {
+  console.log('Connected to the database')
+})
+
+const init = async () => {
+  await db.sync({force:true})
+  app.listen(PORT, ()=>{
+    console.log(`connection to localhost ${PORT}`);
+  });
+}
+
+init();
+
 
 app.use('/', (route));
 //morgan logs the middleware

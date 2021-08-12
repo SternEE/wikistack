@@ -4,6 +4,8 @@ const PORT = 3000;
 const route = require('./routes/route');
 const morgan = require('morgan');
 const { db } = require('./models');
+const wikiRouter = require('./routes/wiki.js');
+const usersRouter = require('./routes/users.js');
 
 
 
@@ -20,6 +22,10 @@ const init = async () => {
 }
 
 init();
+
+//routes to wiki and users
+app.use('/wiki', (wikiRouter));
+app.use('/users', (usersRouter));
 
 
 app.use('/', (route));
